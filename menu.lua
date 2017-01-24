@@ -14,7 +14,7 @@ end
 
 function menu.draw(self, x, y)
 	local height = 20
-  local width = 300
+  local width = 200
   
   love.graphics.setColor(255, 255, 255, 128)
   love.graphics.rectangle('fill', x, y + height*(self.selected-1) + (self.animOffset * height), width, height)
