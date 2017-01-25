@@ -5,7 +5,7 @@ function walkjump:enter()
   menu:addItem{
     name = '1. Basic Walking',
     action = function()
-      -- do something
+     Gamestate.switch(basicwalking)
     end
   }
   menu:addItem{

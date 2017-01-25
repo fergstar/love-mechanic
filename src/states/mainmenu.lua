@@ -17,7 +17,7 @@ function mainmenu:enter()
 					self.name = 'Disable fullscreen'
 				end
 			else
-				if love.window.setMode(800, 600, {fullscreen=false}) then
+				if love.window.setMode(1024, 600, {fullscreen=false}) then
 					fullscreen = false
 					self.name = 'Enable fullscreen'
 				end
