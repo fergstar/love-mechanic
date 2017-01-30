@@ -1,6 +1,8 @@
 local walkjump = {}
 
 function walkjump:enter()
+  love.graphics.setBackgroundColor(0, 0, 0)
+  
   menu = Menu
   menu:addItem{
     name = '1. Basic Walking',

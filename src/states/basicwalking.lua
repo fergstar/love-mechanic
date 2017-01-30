@@ -48,6 +48,9 @@ function basicwalking:update(dt)
 		if player.x > 0 then 
 			player.x = player.x - (MAX_SPEED * dt)
 		end
+  elseif love.keyboard.isDown('q') then
+    
+    Gamestate.switch(walkjump)
 	end
   
 end

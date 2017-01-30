@@ -1,6 +1,7 @@
 local mainmenu = {}
 
 function mainmenu:enter()
+  love.graphics.setBackgroundColor(0, 0, 0)
  menu = Menu
 	menu:addItem{
 		name = '1. Walking & Jumping',
