@@ -13,31 +13,31 @@ function walkjump:enter()
   menu:addItem{
     name = '2. With acceleration',
     action = function()
-      -- do something
+      Gamestate.switch(withacceleration)
     end
   }
   menu:addItem{
     name = '3. With drag',
     action = function()
-      -- do something
+      Gamestate.switch(withdrag)
     end
   }
   menu:addItem{
     name = '4. Jumping',
     action = function()
-      -- do something
+      Gamestate.switch(jumping)
     end
   }
   menu:addItem{
     name = '5. Double jump',
     action = function()
-      -- do something
+      Gamestate.switch(doublejump)
     end
   }
   menu:addItem{
     name = '6. Variable jump height',
     action = function()
-      -- do something
+      Gamestate.switch(variablejumpheight)
     end
   }
   menu:addItem{

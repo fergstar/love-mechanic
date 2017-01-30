@@ -1,12 +1,14 @@
-Menu = require 'menu'
+Menu = require 'libs/menu'
 
 Gamestate = require 'libs/hump/gamestate'
 basicwalking = require 'src/states/basicwalking'
+withacceleration = require 'src/states/withAcceleration'
+withdrag = require 'src/states/withDrag'
+jumping = require 'src/states/jumping'
+doublejump = require 'src/states/doublejump'
+variablejumpheight = require 'src/states/variableJumpHeight'
 walkjump = require 'src/states/walkjump'
 mainmenu = require 'src/states/mainmenu'
-
-local aspect_ratio = require 'libs/aspect_ratio'
-local canvas
 
 fullscreen = false
 playingAreaWidth = love.graphics.getWidth() 
