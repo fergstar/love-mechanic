@@ -4,6 +4,7 @@ local ground = {}
 
 -- define movement constants
 local MAX_SPEED = 500 -- pixels/second
+local GROUND_HEIGHT = 560
 
 function withdrag:enter()
 
@@ -16,7 +17,7 @@ function withdrag:enter()
   -- Create a player sprite.
   player.img = love.graphics.newImage('assets/player.png')  
   player.x = width / 2   -- This sets the player at the middle of the screen based on the width of the game window. 
-  player.y = height / 2  -- This sets the player at the middle of the screen based on the height of the game window. 
+  player.y = GROUND_HEIGHT  -- This sets the player at the middle of the screen based on the height of the game window. 
  
   -- Create some ground for the player to walk on
   ground.img = love.graphics.newImage('assets/ground.png')
@@ -27,11 +28,13 @@ end
 
 function withdrag:draw()
   
+  love.graphics.setBlendMode("alpha")
+  
     -- This draws the player.
 	love.graphics.draw(player.img, player.x, player.y, 0, 1, 1, 0, 32)
   
   -- This draws the ground.
-  love.graphics.draw(ground.img, ground.imgFrame, 0, player.y)
+  love.graphics.draw(ground.img, ground.imgFrame, 0, GROUND_HEIGHT)
   
 end
 

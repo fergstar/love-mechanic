@@ -4,34 +4,35 @@ local ground = {}
 
 -- define movement constants
 local MAX_SPEED = 500 -- pixels/second
+local GROUND_HEIGHT = 560
 
 function basicwalking:enter()
 
-  -- Set stage background to something sky colored
-  love.graphics.setBackgroundColor(131, 192, 240)
-
+   -- Set stage background to something sky colored
+  love.graphics.setBackgroundColor(66, 136, 204)
+  
   width = love.graphics.getWidth()	-- get width of screen
-  height = love.graphics.getHeight()	-- height, too.
-
+  height = love.graphics.getHeight()	-- height, too.	
+  
   -- Create a player sprite.
   player.img = love.graphics.newImage('assets/player.png')  
   player.x = width / 2   -- This sets the player at the middle of the screen based on the width of the game window. 
-  player.y = height / 2  -- This sets the player at the middle of the screen based on the height of the game window. 
+  player.y = GROUND_HEIGHT -- This sets the player at the middle of the screen based on the height of the game window. 
  
   -- Create some ground for the player to walk on
   ground.img = love.graphics.newImage('assets/ground.png')
-  ground.img:setWrap('repeat','clamp') 
-  ground.imgFrame = love.graphics.newQuad(0, 0, width, height, ground.img:getWidth(), ground.img:getHeight())	
-  
+  ground.img:setWrap('repeat','clamp')
+  ground.imgFrame = love.graphics.newQuad(0, 0, width, height, ground.img:getWidth(), ground.img:getHeight())
 end
 
 function basicwalking:draw()
+  love.graphics.setBlendMode("alpha")
   
     -- This draws the player.
 	love.graphics.draw(player.img, player.x, player.y, 0, 1, 1, 0, 32)
   
-  -- This draws the ground.
-  love.graphics.draw(ground.img, ground.imgFrame, 0, player.y)
+  -- This draws the ground.  
+  love.graphics.draw(ground.img, ground.imgFrame, 0, GROUND_HEIGHT)
   
 end
 
