@@ -10,6 +10,7 @@ function jumping:enter()
 
   -- Set stage background to something sky colored
   love.graphics.setBackgroundColor(131, 192, 240)
+  
 
   width = love.graphics.getWidth()	-- get width of screen
   height = love.graphics.getHeight()	-- height, too.
@@ -24,7 +25,9 @@ function jumping:enter()
  
 	player.jump_height = -500    -- Whenever the character jumps, he can reach this height.
 	player.gravity = -800        -- Whenever the character falls, he will descend at this rate.
-  
+  player.jumping = false
+  player.onTheGround = true
+  player.jumps = 2
 
   -- Create some ground for the player to walk on
   ground.img = love.graphics.newImage('assets/ground.png')
@@ -41,11 +44,18 @@ function jumping:draw()
   
   -- This draws the ground.
   love.graphics.draw(ground.img, ground.imgFrame, 0, GROUND_HEIGHT)
+
+  love.graphics.print(tostring(upInputIsActive()), 10, 10)
   
 end
 
 -- The update() method is called every frame
 function jumping:update(dt)
+  
+   if (player.onTheGround) then
+      player.jumps = 2
+      player.jumping = false
+   end
   
    if love.keyboard.isDown('right') then
 		-- This makes sure that the character doesn't go pass the game window's right edge.
@@ -64,26 +74,73 @@ function jumping:update(dt)
     Gamestate.switch(walkjump)
 	end
   
-  -- This is in charge of player jumping.
-	if love.keyboard.isDown('up') then                     -- Whenever the player presses or holds down the Spacebar:
-    -- The game checks if the player is on the ground. Remember that when the player is on the ground, Y-Axis Velocity = 0.
-		if player.y_velocity == 0 then
-			player.y_velocity = player.jump_height    -- The player's Y-Axis Velocity is set to it's Jump Height.
-		end
-	end
+  -- If the player is touching the ground, let him have 2 jumps
+  if (player.onTheGround) then
+    player.jumps = 2
+    player.jumping = false
+  end
   
-  -- This is in charge of the jump physics.
-  if player.y_velocity ~= 0 then                                      -- The game checks if player has "jumped" and left the ground.
-		player.y = player.y + player.y_velocity * dt                -- This makes the character ascend/jump.
+  -- Jump!
+  if player.jumps > 0 and upInputIsActive() then
+    player.y_velocity = player.jump_height 
+    player.jumping = true
+    player.onTheGround = false
+  end
+  
+  --if player.jumping then
+  if player.y_velocity ~= 0 then
+    player.y = player.y + player.y_velocity * dt                -- This makes the character ascend/jump.
 		player.y_velocity = player.y_velocity - player.gravity * dt -- This applies the gravity to the character.
-	end
- 
-  -- This is in charge of collision, making sure that the character lands on the ground.
+  end
+  
+  -- Reduce the number of available jumps if the jump input is released
+  --if player.jumping and upInputReleased then
+    --player.jumps = player.jumps - 1
+    --player.jumping = false
+  --end
+  
+    -- This is in charge of collision, making sure that the character lands on the ground.
   if player.y > player.ground then    -- The game checks if the player has jumped.
     player.y_velocity = 0       -- The Y-Axis Velocity is set back to 0 meaning the character is on the ground again.
     player.y = player.ground    -- The Y-Axis Velocity is set back to 0 meaning the character is on the ground again.
+    player.onTheGround = true
+    
   end
   
+
+  
+  
 end
+
+
+function upInputIsActive()
+   
+    isActive = love.keyboard.isDown('up')
+    
+    return isActive
+end
+
+keys ={}
+function getHeldTime(key)
+  if love.keyboard.isDown(key) then
+    return os.clock() - keys[key]
+  else
+    return keys[key]
+  end
+end
+
+function love.keypressed(key)
+  keys[key] = os.clock()
+end
+
+function love.keyreleased(key)
+    
+    keys[key] = os.clock() - keys[key]
+  
+    if player.jumping and key == "up" then
+      player.jumps = player.jumps - 1
+      --player.jumping = false
+    end
+end 
 
 return jumping
