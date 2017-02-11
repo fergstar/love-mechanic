@@ -9,6 +9,12 @@ function mainmenu:enter()
 			Gamestate.switch(walkjump)
 		end
 	}
+  menu:addItem {
+    name = '2. Bullets',
+    action = function()
+      Gamestate.swtich(bullets)
+    end
+  }
 	menu:addItem{
 		name = 'Fullscreen',
 		action = function(self)
