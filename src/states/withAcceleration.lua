@@ -9,7 +9,7 @@ local GROUND_HEIGHT = 560
 function withacceleration:enter()
 
   -- Set stage background to something sky colored
-  love.graphics.setBackgroundColor(131, 192, 240)
+  love.graphics.setBackgroundColor(66, 136, 204)
 
   width = love.graphics.getWidth()	-- get width of screen
   height = love.graphics.getHeight()	-- height, too.

@@ -1,6 +1,8 @@
 local jumping = {}
 local player = {}
 local ground = {}
+love.keyboard.keysPressed = { }
+love.keyboard.keysReleased = { }
 
 -- define movement constants
 local MAX_SPEED = 500 -- pixels/second
@@ -9,7 +11,7 @@ local GROUND_HEIGHT = 560
 function jumping:enter()
 
   -- Set stage background to something sky colored
-  love.graphics.setBackgroundColor(131, 192, 240)
+  love.graphics.setBackgroundColor(66, 136, 204)
   
 
   width = love.graphics.getWidth()	-- get width of screen
@@ -45,8 +47,6 @@ function jumping:draw()
   -- This draws the ground.
   love.graphics.draw(ground.img, ground.imgFrame, 0, GROUND_HEIGHT)
 
-  love.graphics.print(tostring(upInputIsActive()), 10, 10)
-  
 end
 
 -- The update() method is called every frame
@@ -69,8 +69,7 @@ function jumping:update(dt)
 		end
   end
   
-  if love.keyboard.isDown('q') then
-    
+  if love.keyboard.isDown('q') then    
     Gamestate.switch(walkjump)
 	end
   
@@ -81,7 +80,7 @@ function jumping:update(dt)
   end
   
   -- Jump!
-  if player.jumps > 0 and upInputIsActive() then
+  if player.jumps > 0 and love.keyboard.wasPressed('up') then
     player.y_velocity = player.jump_height 
     player.jumping = true
     player.onTheGround = false
@@ -94,10 +93,9 @@ function jumping:update(dt)
   end
   
   -- Reduce the number of available jumps if the jump input is released
-  --if player.jumping and upInputReleased then
-    --player.jumps = player.jumps - 1
-    --player.jumping = false
-  --end
+  if player.jumping and love.keyboard.wasReleased('up') then
+    player.jumps = player.jumps - 1
+  end
   
     -- This is in charge of collision, making sure that the character lands on the ground.
   if player.y > player.ground then    -- The game checks if the player has jumped.
@@ -106,41 +104,38 @@ function jumping:update(dt)
     player.onTheGround = true
     
   end
-  
 
-  
-  
+  love.keyboard.updateKeys()
 end
 
-
-function upInputIsActive()
-   
-    isActive = love.keyboard.isDown('up')
-    
-    return isActive
+-- returns if specified key was pressed since the last update
+function love.keyboard.wasPressed(key)
+	if (love.keyboard.keysPressed[key]) then
+		return true
+	else
+		return false
+	end
 end
-
-keys ={}
-function getHeldTime(key)
-  if love.keyboard.isDown(key) then
-    return os.clock() - keys[key]
-  else
-    return keys[key]
-  end
+-- returns if specified key was released since last update
+function love.keyboard.wasReleased(key)
+	if (love.keyboard.keysReleased[key]) then
+		return true
+	else
+		return false
+	end
 end
-
-function love.keypressed(key)
-  keys[key] = os.clock()
+-- concatenate this to existing love.keypressed callback, if any
+function love.keypressed(key, unicode)
+	love.keyboard.keysPressed[key] = true
 end
-
+-- concatenate this to existing love.keyreleased callback, if any
 function love.keyreleased(key)
-    
-    keys[key] = os.clock() - keys[key]
-  
-    if player.jumping and key == "up" then
-      player.jumps = player.jumps - 1
-      --player.jumping = false
-    end
-end 
+	love.keyboard.keysReleased[key] = true
+end
+-- call in end of each love.update to reset lists of pressed\released keys
+function love.keyboard.updateKeys()
+	love.keyboard.keysPressed = { }
+	love.keyboard.keysReleased = { }
+end
 
 return jumping
