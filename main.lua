@@ -1,6 +1,8 @@
 Menu = require 'libs/menu'
 
 Gamestate = require 'libs/hump/gamestate'
+
+-- walking and jumping
 basicwalking = require 'src/states/basicwalking'
 withacceleration = require 'src/states/withAcceleration'
 withdrag = require 'src/states/withDrag'
@@ -8,6 +10,10 @@ jumping = require 'src/states/jumping'
 doublejump = require 'src/states/doublejump'
 variablejumpheight = require 'src/states/variableJumpHeight'
 walkjump = require 'src/states/walkjump'
+
+-- bullets
+bullets = require 'src/states/bullets'
+
 mainmenu = require 'src/states/mainmenu'
 
 fullscreen = false

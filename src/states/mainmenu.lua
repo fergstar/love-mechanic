@@ -12,7 +12,7 @@ function mainmenu:enter()
   menu:addItem {
     name = '2. Bullets',
     action = function()
-      Gamestate.swtich(bullets)
+      Gamestate.switch(bullets)
     end
   }
 	menu:addItem{
