@@ -1,6 +1,8 @@
 local jumping = {}
 local player = {}
 local ground = {}
+love.keyboard.keysPressed = { }
+love.keyboard.keysReleased = { }
 
 -- define movement constants
 local MAX_SPEED = 500 -- pixels/second

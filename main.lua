@@ -1,6 +1,7 @@
 Menu = require 'libs/menu'
 
 Gamestate = require 'libs/hump/gamestate'
+require 'libs/trace'
 
 -- walking and jumping
 basicwalking = require 'src/states/basicwalking'
@@ -28,6 +29,8 @@ function love.load(arg)
   
   Gamestate.registerEvents()
   Gamestate.switch(mainmenu)
+  
+  
 
 end
 

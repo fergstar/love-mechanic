@@ -34,6 +34,7 @@ function basicwalking:draw()
   -- This draws the ground.  
   love.graphics.draw(ground.img, ground.imgFrame, 0, GROUND_HEIGHT)
   
+  trace.draw(300, 10)
 end
 
 -- The update() method is called every frame

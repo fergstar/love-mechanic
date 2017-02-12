@@ -46,6 +46,7 @@ end
 
 function mainmenu:draw()
   menu:draw(10, 10)
+
 end
 
 function mainmenu:update(dt)
