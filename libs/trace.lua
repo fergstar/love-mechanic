@@ -1,3 +1,4 @@
+--https://yal.cc/love2d-simple-logger/
 trace = {
 	textl = { },
 	stylel = { },
@@ -13,6 +14,7 @@ trace = {
 	limit = 32
 }
 
+-- trace.print('Key pressed: ' .. tostring(k), trace.styles.red)
 function trace.print(text, style)
 	if (style == nil) then -- no style given
 		style = trace.styles.default
@@ -27,6 +29,11 @@ function trace.print(text, style)
 	trace.stylel[trace.count] = style
 end
 
+--[[
+function love.draw()
+	trace.draw()
+end
+]]--
 function trace.draw(x, y)
 	local i, s, z, prefix
 	prefix = '' 

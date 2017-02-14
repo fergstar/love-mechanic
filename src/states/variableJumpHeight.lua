@@ -4,6 +4,8 @@ local ground = {}
 love.keyboard.keysPressed = { }
 love.keyboard.keysReleased = { }
 
+keys = {}
+
 -- define movement constants
 local MAX_SPEED = 500 -- pixels/second
 local GROUND_HEIGHT = 560
@@ -46,7 +48,7 @@ function jumping:draw()
   
   -- This draws the ground.
   love.graphics.draw(ground.img, ground.imgFrame, 0, GROUND_HEIGHT)
-
+  
 end
 
 -- The update() method is called every frame
@@ -79,8 +81,9 @@ function jumping:update(dt)
     player.jumping = false
   end
   
-  -- Jump!
-  if player.jumps > 0 and love.keyboard.wasPressed('up') then
+  -- Jump! Keep y velocity constant while the jump button is held for up to 150ms
+  if player.jumps > 0 and upInputIsActive(0.02) then
+  --love.keyboard.wasPressed('up') then
     player.y_velocity = player.jump_height 
     player.jumping = true
     player.onTheGround = false
@@ -108,6 +111,22 @@ function jumping:update(dt)
   love.keyboard.updateKeys()
 end
 
+function upInputIsActive(duration) 
+  isActive = false
+  isActive = downDuration('up', duration)
+  return isActive
+end
+
+function downDuration(key, duration)
+  
+  isDown = love.keyboard.isDown(key)  
+  heldtime = getHeldTime(key)
+  value = isDown and heldtime < duration
+  
+  return value;
+end
+
+
 -- returns if specified key was pressed since the last update
 function love.keyboard.wasPressed(key)
 	if (love.keyboard.keysPressed[key]) then
@@ -126,16 +145,30 @@ function love.keyboard.wasReleased(key)
 end
 -- concatenate this to existing love.keypressed callback, if any
 function love.keypressed(key, unicode)
-	love.keyboard.keysPressed[key] = true
+	
+  keys[key] = os.clock()
+  love.keyboard.keysPressed[key] = true
+  
 end
 -- concatenate this to existing love.keyreleased callback, if any
 function love.keyreleased(key)
+  keys[key] = os.clock() - keys[key]
 	love.keyboard.keysReleased[key] = true
 end
 -- call in end of each love.update to reset lists of pressed\released keys
 function love.keyboard.updateKeys()
 	love.keyboard.keysPressed = { }
 	love.keyboard.keysReleased = { }
+end
+
+function getHeldTime(key)
+  
+  if love.keyboard.isDown(key) then
+    return os.clock() - keys[key]
+  else
+    return keys[key]
+  end
+
 end
 
 return jumping
