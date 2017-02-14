@@ -13,7 +13,11 @@ variablejumpheight = require 'src/states/variableJumpHeight'
 walkjump = require 'src/states/walkjump'
 
 -- bullets
+singleshot = require 'src/states/singleshot'
+rapidfire = require 'src/states/rapidfire'
+aiming = require 'src/states/aiming'
 bullets = require 'src/states/bullets'
+
 
 mainmenu = require 'src/states/mainmenu'
 

@@ -7,19 +7,19 @@ function bullets:enter()
   menu:addItem{
     name = '1. Single Shot',
     action = function()
-     --Gamestate.switch(singleshot)
+     Gamestate.switch(singleshot)
     end
   }
   menu:addItem{
     name = '2. Rapid Fire',
     action = function()
-      --Gamestate.switch(rapidfire)
+      Gamestate.switch(rapidfire)
     end
   }
   menu:addItem{
     name = '3. Aiming',
     action = function()
-      --Gamestate.switch(aiming)
+      Gamestate.switch(aiming)
     end
   }
   menu:addItem{
